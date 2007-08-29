@@ -12,7 +12,7 @@
 Summary:	JavaScript engine
 Name:		js
 Version:	1.5
-Release:	%mkrel 1
+Release:	%mkrel 3
 License:	MPL
 Group:		Development/Other
 URL:		http://www.gingerall.com/charlie/ga/xml/d_related.xml
