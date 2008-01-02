@@ -26,6 +26,7 @@ BuildRequires:	multiarch-utils >= 1.0.3
 %endif
 Epoch:		%{epoch}
 BuildRequires:	editline-devel
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 
 %description
 JavaScript is the Netscape-developed object scripting languages. This
