@@ -12,7 +12,7 @@
 Summary:	JavaScript engine
 Name:		js
 Version:	1.5
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	MPL
 Group:		Development/Other
 URL:		http://www.gingerall.com/charlie/ga/xml/d_related.xml
@@ -50,8 +50,8 @@ Summary:	The header files for %{libname}
 Group:		Development/C
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
-Provides:	%{libname}-devel = %{epoch}:%{version}-%{release}
-Obsoletes:	%{libname}-devel
+Provides:	libjs-devel = %{epoch}:%{version}-%{release}
+Obsoletes: %mklibname -d js 1
 Epoch:		%{epoch}
 
 %description -n	%{develname}
