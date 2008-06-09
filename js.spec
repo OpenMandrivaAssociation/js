@@ -125,9 +125,13 @@ install -m0644 src/libjs.pc %{buildroot}%{_libdir}/pkgconfig/
 %multiarch_includes %{buildroot}%{_includedir}/js-%{version}/jsautocfg.h
 %endif
 
+%if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
