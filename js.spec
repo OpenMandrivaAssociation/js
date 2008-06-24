@@ -1,32 +1,31 @@
-# if we don't deactivate debug packages there is one strange
-# /usr/lib/debug/usr/lib64/U unpacked file on x86_64
-%define _enable_debug_packages %{nil}
-%define debug_package          %{nil}
-
 %define major 1
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 
 %define epoch	1
 
+%define real_version 1.7.0
+
 Summary:	JavaScript engine
 Name:		js
-Version:	1.5
-Release:	%mkrel 6
+Version:	1.70
+Release:	%mkrel 1
 License:	MPL
 Group:		Development/Other
-URL:		http://www.gingerall.com/charlie/ga/xml/d_related.xml
-Source0:	%{name}-%{version}.tar.gz
-Patch0:		lib%{name}-%{version}.patch
+URL:		http://www.mozilla.org/js/
+Source0:	http://ftp.mozilla.org/pub/mozilla.org/js/js-%{real_version}.tar.gz
 Patch1:		js-va_copy.diff
 Patch2:		js-editline.diff
-Requires:	%{libname} = %{epoch}:%{version}-%{release}
-%if %mdkversion >= 1020
+Patch3:		js-1.7.0-make.patch
+Patch4:		js-shlib.patch
+Patch5:		js-ldflags.patch
+Patch6:		js-1.7.0-threadsafe.patch
 BuildRequires:	multiarch-utils >= 1.0.3
-%endif
-Epoch:		%{epoch}
 BuildRequires:	editline-devel
-BuildRoot:	%{_tmppath}/%{name}-buildroot
+BuildRequires:	nspr-devel
+Requires:	%{libname} = %{epoch}:%{version}-%{release}
+Epoch:		%{epoch}
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 JavaScript is the Netscape-developed object scripting languages. This
@@ -51,7 +50,7 @@ Group:		Development/C
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
 Provides:	libjs-devel = %{epoch}:%{version}-%{release}
-Obsoletes: %mklibname -d js 1
+Obsoletes:	%{mklibname -d js 1}
 Epoch:		%{epoch}
 
 %description -n	%{develname}
@@ -65,20 +64,23 @@ for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type 
     if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
 done
 
-cd src
-%patch0 -p0 
-cd ..
 %patch1 -p1 -b .va_copy
 %patch2 -p0 -b .editline
+%patch3 -p1 -b .make
+%patch4 -p0 -b .shlib
+%patch5 -p0 -b .ldflags
+%patch6 -p1 -b .threadsafe
 
 %build
-cd src
-perl -pi -e "s/-shared/-shared -lc -soname libjs.so.1/;" config/Linux_All.mk
-#JMD: %make does *not* work!
 export CFLAGS="%{optflags} -fno-stack-protector -DPIC -fPIC -D_REENTRANT"
 export XCFLAGS="$CFLAGS"
+export BUILD_OPT=1
 
-BUILD_OPT=1 make -f Makefile.ref 
+make -C src -f Makefile.ref \
+    JS_THREADSAFE="1" \
+    XCFLAGS="$CFLAGS" \
+    BUILD_OPT="1" \
+    JS_EDITLINE="1"
 
 # create pkgconfig file
 # pkgconfig can't find libjs without it
@@ -91,12 +93,12 @@ includedir=%{_includedir}
 Name: libjs
 Description: %{summary}
 Version: %{version}
-Libs: -L${libdir} -ljs
-Cflags: -I${includedir}/js-%{version}
+Libs: -L\${libdir} -ljs
+Cflags: -I\${includedir}/js-%{version}
 EOF
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 install -d %{buildroot}%{_bindir}
 install -d %{buildroot}%{_libdir}
@@ -104,6 +106,8 @@ install -d %{buildroot}%{_includedir}/js-%{version}
 
 # install headers
 install -m0644 src/*.h %{buildroot}%{_includedir}/js-%{version}/
+install -m0644 src/js.msg %{buildroot}%{_includedir}/js-%{version}/
+install -m0644 src/*.tbl %{buildroot}%{_includedir}/js-%{version}/
 install -m0644 src/Linux_All_OPT.OBJ/jsautocfg.h %{buildroot}%{_includedir}/js-%{version}/
 
 # install shared library
@@ -116,14 +120,13 @@ install -m0644 src/Linux_All_OPT.OBJ/lib%{name}.a %{buildroot}%{_libdir}/
 
 # install binary
 install -m0755 src/Linux_All_OPT.OBJ/%{name} %{buildroot}%{_bindir}/
+install -m0755 src/Linux_All_OPT.OBJ/jscpucfg %{buildroot}%{_bindir}/
 
 # install pkgconfig file
 mkdir -p %{buildroot}%{_libdir}/pkgconfig/
-install -m0644 src/libjs.pc %{buildroot}%{_libdir}/pkgconfig/
+install -m0644 libjs.pc %{buildroot}%{_libdir}/pkgconfig/
 
-%if %mdkversion >= 1020
 %multiarch_includes %{buildroot}%{_includedir}/js-%{version}/jsautocfg.h
-%endif
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -134,7 +137,7 @@ install -m0644 src/libjs.pc %{buildroot}%{_libdir}/pkgconfig/
 %endif
 
 %clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
@@ -148,9 +151,7 @@ install -m0644 src/libjs.pc %{buildroot}%{_libdir}/pkgconfig/
 %files -n %{develname}
 %defattr(-,root,root)
 %dir %{_includedir}/js-%{version}
-%if %mdkversion >= 1020
 %multiarch %{multiarch_includedir}/js-%{version}/jsautocfg.h
-%endif
 %{_includedir}/js-%{version}/*
 %{_libdir}/*.so
 %{_libdir}/*.a
