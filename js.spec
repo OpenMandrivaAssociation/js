@@ -1,4 +1,4 @@
-%define _requires_exceptions devel(libnspr4)\\|devel(libplc4)\\|devel(libplds4)
+%define _requires_exceptions devel(libnspr4\\|devel(libplc4\\|devel(libplds4
 
 %define major 1
 %define libname %mklibname %{name} %{major}
@@ -11,7 +11,7 @@
 Summary:	JavaScript engine
 Name:		js
 Version:	1.70
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	MPL
 Group:		Development/Other
 URL:		http://www.mozilla.org/js/
