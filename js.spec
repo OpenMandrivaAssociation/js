@@ -1,3 +1,5 @@
+%define _requires_exceptions devel(libnspr4)\\|devel(libplc4)\\|devel(libplds4)
+
 %define major 1
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
@@ -9,7 +11,7 @@
 Summary:	JavaScript engine
 Name:		js
 Version:	1.70
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	MPL
 Group:		Development/Other
 URL:		http://www.mozilla.org/js/
@@ -51,6 +53,7 @@ Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
 Provides:	libjs-devel = %{epoch}:%{version}-%{release}
 Obsoletes:	%{mklibname -d js 1}
+Requires:	nspr-devel
 Epoch:		%{epoch}
 
 %description -n	%{develname}
