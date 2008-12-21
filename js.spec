@@ -11,7 +11,7 @@
 Summary:	JavaScript engine
 Name:		js
 Version:	1.70
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	MPL
 Group:		Development/Other
 URL:		http://www.mozilla.org/js/
@@ -22,8 +22,9 @@ Patch3:		js-1.7.0-make.patch
 Patch4:		js-shlib.patch
 Patch5:		js-ldflags.patch
 Patch6:		js-1.7.0-threadsafe.patch
+Patch7:		js-format_not_a_string_literal_and_no_format_arguments.diff
 BuildRequires:	multiarch-utils >= 1.0.3
-BuildRequires:	editline-devel
+BuildRequires:	edit-devel
 BuildRequires:	nspr-devel
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Epoch:		%{epoch}
@@ -73,17 +74,20 @@ done
 %patch4 -p0 -b .shlib
 %patch5 -p0 -b .ldflags
 %patch6 -p1 -b .threadsafe
+%patch7 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 
 %build
 export CFLAGS="%{optflags} -fno-stack-protector -DPIC -fPIC -D_REENTRANT"
 export XCFLAGS="$CFLAGS"
 export BUILD_OPT=1
+export LDFLAGS="%{ldflags}"
 
 make -C src -f Makefile.ref \
     JS_THREADSAFE="1" \
     XCFLAGS="$CFLAGS" \
     BUILD_OPT="1" \
-    JS_EDITLINE="1"
+    JS_EDITLINE="1" \
+    LDFLAGS="%{ldflags}"
 
 # create pkgconfig file
 # pkgconfig can't find libjs without it
