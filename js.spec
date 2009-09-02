@@ -11,7 +11,7 @@
 Summary:	JavaScript engine
 Name:		js
 Version:	1.70
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	MPL
 Group:		Development/Other
 URL:		http://www.mozilla.org/js/
