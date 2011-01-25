@@ -4,14 +4,12 @@
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 
-%define epoch	1
-
 %define real_version 1.7.0
 
 Summary:	JavaScript engine
 Name:		js
 Version:	1.70
-Release:	%mkrel 7
+Release:	%mkrel 8
 License:	MPL
 Group:		Development/Other
 URL:		http://www.mozilla.org/js/
@@ -26,8 +24,7 @@ Patch7:		js-format_not_a_string_literal_and_no_format_arguments.diff
 BuildRequires:	multiarch-utils >= 1.0.3
 BuildRequires:	edit-devel
 BuildRequires:	nspr-devel
-Requires:	%{libname} = %{epoch}:%{version}-%{release}
-Epoch:		%{epoch}
+Epoch:		1
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -39,7 +36,6 @@ and sources.
 %package -n	%{libname}
 Summary:	JavaScript engine library
 Group:		System/Libraries
-Epoch:		%{epoch}
 
 %description -n	%{libname}
 JavaScript is the Netscape-developed object scripting languages. This
@@ -50,9 +46,9 @@ and sources.
 %package -n	%{develname}
 Summary:	The header files for %{libname}
 Group:		Development/C
-Requires:	%{libname} = %{epoch}:%{version}-%{release}
-Provides:	%{name}-devel = %{epoch}:%{version}-%{release}
-Provides:	libjs-devel = %{epoch}:%{version}-%{release}
+Requires:	%{libname} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
+Provides:	libjs-devel = %{EVRD}
 Obsoletes:	%{mklibname -d js 1}
 Requires:	nspr-devel
 Epoch:		%{epoch}
