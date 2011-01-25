@@ -82,9 +82,10 @@ export XCFLAGS="$CFLAGS"
 export BUILD_OPT=1
 export LDFLAGS="%{ldflags}"
 
-make -C src -f Makefile.ref \
+export BUILD_OPT=1
+%make -C src -f Makefile.ref \
     JS_THREADSAFE="1" \
-    XCFLAGS="$CFLAGS" \
+    XCFLAGS="$CFLAGS  -fPIC -DJS_C_STRINGS_ARE_UTF8" \
     BUILD_OPT="1" \
     JS_EDITLINE="1" \
     LDFLAGS="%{ldflags}"
