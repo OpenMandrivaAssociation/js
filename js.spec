@@ -20,6 +20,8 @@ BuildRequires:	multiarch-utils >= 1.0.3
 BuildRequires:	nspr-devel
 BuildRequires:	readline-devel
 BuildRequires:	autoconf2.1
+# wtf?
+BuildRequires:	zip
 Epoch:		1
 
 %description
