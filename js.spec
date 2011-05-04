@@ -94,7 +94,7 @@ install -m755 jscpucfg -D %{buildroot}%{_bindir}/jscpucfg
 %files -n %{devname}
 %doc README.html
 %dir %{_includedir}/js
-%multiarch %{multiarch_includedir}/js/jsautocfg.h
+%{multiarch_includedir}/js/jsautocfg.h
 %{_includedir}/js/*
 %{_libdir}/*.so
 %{_libdir}/*.a
