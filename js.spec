@@ -9,7 +9,7 @@
 Summary:	SpiderMonkey, the Mozilla JavaScript engine
 Name:		js
 Version:	1.85
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	MPL
 Group:		Development/Other
 URL:		http://www.mozilla.org/js/
@@ -20,6 +20,7 @@ BuildRequires:	multiarch-utils >= 1.0.3
 BuildRequires:	nspr-devel
 BuildRequires:	readline-devel
 BuildRequires:	autoconf2.1
+BuildRequires:	python
 # wtf?
 BuildRequires:	zip
 Epoch:		1
