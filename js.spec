@@ -85,7 +85,7 @@ install -m755 jscpucfg -D %{buildroot}%{_bindir}/jscpucfg
 %multiarch_includes %{buildroot}%{_includedir}/js/jsautocfg.h
 
 # cleanup
-rm -f {buildroot}%{_libdir}/*.*a
+rm -f %{buildroot}%{_libdir}/*.*a
 
 %files
 %{_bindir}/*
