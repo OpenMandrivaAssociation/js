@@ -9,14 +9,12 @@
 Summary:	SpiderMonkey, the Mozilla JavaScript engine
 Name:		js
 Version:	1.85
-Release:	%mkrel 4
+Release:	5
 License:	MPL
 Group:		Development/Other
 URL:		http://www.mozilla.org/js/
 Source0:	http://ftp.mozilla.org/pub/mozilla.org/js/%{name}185-1.0.0.tar.gz
 Patch0:		js-1.8.5-fix-destdir.patch
-
-BuildRequires:	multiarch-utils >= 1.0.3
 BuildRequires:	nspr-devel
 BuildRequires:	readline-devel
 BuildRequires:	autoconf2.1
@@ -54,7 +52,7 @@ and generators. SpiderMonkey also supports E4X (optionally).
 %package -n	%{devname}
 Summary:	The header files for %{libname}
 Group:		Development/C
-Requires:	%{libname} = %{EVRD}
+Requires:	%{libname} >= %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 Provides:	libjs-devel = %{EVRD}
 Provides:	mozjs-devel = %{EVRD}
@@ -86,6 +84,9 @@ install -m755 jscpucfg -D %{buildroot}%{_bindir}/jscpucfg
 
 %multiarch_includes %{buildroot}%{_includedir}/js/jsautocfg.h
 
+# cleanup
+rm -f {buildroot}%{_libdir}/*.*a
+
 %files
 %{_bindir}/*
 
@@ -98,5 +99,4 @@ install -m755 jscpucfg -D %{buildroot}%{_bindir}/jscpucfg
 %{multiarch_includedir}/js/jsautocfg.h
 %{_includedir}/js/*
 %{_libdir}/*.so
-%{_libdir}/*.a
 %{_libdir}/pkgconfig/*.pc
