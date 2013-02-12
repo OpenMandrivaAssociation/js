@@ -1,5 +1,3 @@
-%define _requires_exceptions devel(libnspr4\\|devel(libplc4\\|devel(libplds4
-
 %define	major	1
 %define	libname	%mklibname mozjs185_ %{major}
 %define	devname	%mklibname mozjs185 -d
@@ -9,7 +7,7 @@
 Summary:	SpiderMonkey, the Mozilla JavaScript engine
 Name:		js
 Version:	1.85
-Release:	5
+Release:	7
 License:	MPL
 Group:		Development/Other
 URL:		http://www.mozilla.org/js/
@@ -102,8 +100,11 @@ install -m755 jscpucfg -D %{buildroot}%{_bindir}/jscpucfg
 %{_libdir}/*.a
 %{_libdir}/pkgconfig/*.pc
 
-
 %changelog
+* Tue Feb 12 2013 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.85-7
+- drop use of old dependency filter which doesn't seem to have made much
+  sense in the first place
+
 * Sun Jun 26 2011 Luis Daniel Lucio Quiroz <dlucio@mandriva.org> 1:1.85-4mdv2011.0
 + Revision: 687247
 - python as new BR
