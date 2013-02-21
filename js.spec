@@ -7,7 +7,7 @@
 Summary:	SpiderMonkey, the Mozilla JavaScript engine
 Name:		js
 Version:	1.85
-Release:	8
+Release:	9
 License:	MPL
 Group:		Development/Other
 URL:		http://www.mozilla.org/js/
