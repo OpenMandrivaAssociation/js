@@ -1,6 +1,7 @@
 %define	major	1
 %define	libname	%mklibname mozjs185_ %{major}
 %define	devname	%mklibname mozjs185 -d
+%define staticname %mklibname mozjs185 -d -s
 
 %define real_version 1.8.5
 
@@ -8,7 +9,7 @@ Summary:	SpiderMonkey, the Mozilla JavaScript engine
 Name:		js
 Epoch:		1
 Version:	1.85
-Release:	9
+Release:	10
 License:	MPL
 Group:		Development/Other
 Url:		http://www.mozilla.org/js/
@@ -52,6 +53,14 @@ Provides:	mozjs-devel = %{EVRD}
 %description -n	%{devname}
 These are the header files for development with SpiderMonkey.
 
+%package -n	%{staticname}
+Summary:	Static library for %{libname}
+Group:		Development/C
+Requires:	%{devname} = %{EVRD}
+
+%description -n	%{staticname}
+Static library for %{libname}
+
 %prep
 %setup -qn %{name}-%{real_version}/js/src
 %patch0 -p3 -b .destdir~
@@ -91,3 +100,5 @@ install -m755 jscpucfg -D %{buildroot}%{_bindir}/jscpucfg
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 
+%files -n %{staticname}
+%{_libdir}/*.a
