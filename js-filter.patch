@@ -1,0 +1,11 @@
+--- js/src/Makefile.in.orig	2011-11-10 18:33:13.000000000 +0100
++++ js/src/Makefile.in	2011-11-10 18:35:54.000000000 +0100
+@@ -382,7 +382,7 @@
+ # END enclude sources for V8 dtoa
+ #############################################
+ 
+-ifeq (,$(filter-out powerpc sparc,$(TARGET_CPU)))
++ifeq (,$(filter-out powerpc powerpc64 powerpc64le s390 s390x aarch64,$(TARGET_CPU)))
+ 
+ VPATH +=	$(srcdir)/assembler \
+ 		$(srcdir)/assembler/wtf \

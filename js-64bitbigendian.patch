@@ -1,0 +1,12 @@
+Index: js-1.8.5/js/src/jsval.h
+===================================================================
+--- js-1.8.5.orig/js/src/jsval.h
++++ js-1.8.5/js/src/jsval.h
+@@ -347,6 +347,7 @@ typedef union jsval_layout
+             int32          i32;
+             uint32         u32;
+             JSWhyMagic     why;
++            jsuword        word;
+         } payload;
+     } s;
+     double asDouble;

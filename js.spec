@@ -17,7 +17,9 @@ Source0:	http://ftp.mozilla.org/pub/mozilla.org/js/%{name}185-1.0.0.tar.gz
 Source100:	js.rpmlintrc
 Patch0:		js-1.8.5-fix-destdir.patch
 Patch1:		spidermonkey-1.8.5-arm_respect_cflags-3.patch
-Patch2:		bz1027492-aarch64.patch
+Patch2:		js-64bitbigendian.patch
+Patch3:		js185-libedit.patch
+Patch4:		js-filter.patch
 
 BuildRequires:	multiarch-utils >= 1.0.3
 BuildRequires:	nspr-devel
@@ -67,7 +69,10 @@ Static library for %{libname}
 %setup -qn %{name}-%{real_version}/js/src
 %patch0 -p3 -b .destdir~
 %patch1 -p3 -b .respectcflags~
-%patch2 -p3 -b .arm64
+%patch2 -p3 -b .bigendian
+%patch3 -p3 -b .libed
+%patch4 -p2 -b .jsf
+
 autoconf-2.13
 
 %build
