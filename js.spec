@@ -23,6 +23,7 @@ Patch4:		js-filter.patch
 
 BuildRequires:	multiarch-utils >= 1.0.3
 BuildRequires:	nspr-devel
+BuildRequires:	pkgconfig(libedit)
 BuildRequires:	readline-devel
 BuildRequires:	autoconf2.1
 BuildRequires:	python
