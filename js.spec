@@ -9,11 +9,15 @@ Summary:	SpiderMonkey, the Mozilla JavaScript engine
 Name:		js
 Epoch:		1
 Version:	1.85
-Release:	14
+Release:	15
 License:	MPL
 Group:		Development/Other
 Url:		http://www.mozilla.org/js/
 Source0:	http://ftp.mozilla.org/pub/mozilla.org/js/%{name}185-1.0.0.tar.gz
+# by default JS ships with libffi 3.0.10
+# it's very old version 
+# that does not support an ARM64
+Source1:	libffi-3.0.13.tar.gz
 Source100:	js.rpmlintrc
 Patch0:		js-1.8.5-fix-destdir.patch
 Patch1:		spidermonkey-1.8.5-arm_respect_cflags-3.patch
@@ -23,6 +27,7 @@ Patch4:		js-filter.patch
 
 BuildRequires:	multiarch-utils >= 1.0.3
 BuildRequires:	nspr-devel
+BuildRequires:	jemalloc-devel
 BuildRequires:	pkgconfig(libedit)
 BuildRequires:	readline-devel
 BuildRequires:	autoconf2.1
@@ -75,11 +80,15 @@ Static library for %{libname}
 %patch4 -p2 -b .jsf
 
 autoconf-2.13
+rm -rf ctypes/libffi/
+tar -xf %{SOURCE1} -C ctypes
+mv ctypes/libffi-3.0.13 ctypes/libffi/
 
 %build
 %configure2_5x \
 	--disable-static \
 	--enable-readline \
+	--enable-jemalloc \
 	--enable-threadsafe \
 	--enable-ctypes \
 	--with-system-nspr
