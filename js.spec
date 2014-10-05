@@ -85,6 +85,8 @@ tar -xf %{SOURCE1} -C ctypes
 mv ctypes/libffi-3.0.13 ctypes/libffi/
 
 %build
+export CC=gcc
+export CXX=g++
 %configure2_5x \
 	--disable-static \
 	--enable-readline \
