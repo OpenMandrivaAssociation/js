@@ -2,6 +2,7 @@
 %define	libname	%mklibname mozjs185_ %{major}
 %define	devname	%mklibname mozjs185 -d
 %define staticname %mklibname mozjs185 -d -s
+%define _disable_lto 1
 
 %define real_version 1.8.5
 
