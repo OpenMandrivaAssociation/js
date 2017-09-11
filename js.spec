@@ -18,7 +18,7 @@ Source0:	http://ftp.mozilla.org/pub/mozilla.org/js/%{name}185-1.0.0.tar.gz
 # by default JS ships with libffi 3.0.10
 # it's very old version
 # that does not support an ARM64
-Source1:	libffi-3.0.13.tar.gz
+Source1:	libffi-3.2.1.tar.gz
 Source100:	js.rpmlintrc
 Patch0:		js-1.8.5-fix-destdir.patch
 Patch1:		spidermonkey-1.8.5-arm_respect_cflags-3.patch
@@ -98,9 +98,9 @@ tar -xf %{SOURCE1} -C ctypes
 mv ctypes/libffi-3.0.13 ctypes/libffi/
 
 %build
-export CC=gcc
-export CXX=g++
-%configure2_5x \
+#export CC=gcc
+#export CXX=g++
+%configure \
 	--disable-static \
 	--enable-readline \
 	--enable-jemalloc \
