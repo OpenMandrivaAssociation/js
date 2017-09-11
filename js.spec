@@ -10,13 +10,13 @@ Summary:	SpiderMonkey, the Mozilla JavaScript engine
 Name:		js
 Epoch:		1
 Version:	1.85
-Release:	20
+Release:	21
 License:	MPL
 Group:		Development/Other
 Url:		http://www.mozilla.org/js/
 Source0:	http://ftp.mozilla.org/pub/mozilla.org/js/%{name}185-1.0.0.tar.gz
 # by default JS ships with libffi 3.0.10
-# it's very old version 
+# it's very old version
 # that does not support an ARM64
 Source1:	libffi-3.0.13.tar.gz
 Source100:	js.rpmlintrc
@@ -25,6 +25,10 @@ Patch1:		spidermonkey-1.8.5-arm_respect_cflags-3.patch
 Patch2:		js-64bitbigendian.patch
 Patch3:		js185-libedit.patch
 Patch4:		js-filter.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1178141 (http://hg.mozilla.org/mozilla-central/rev/a7b220e7425a)
+Patch9:         js-1.8.5-array-recursion.patch
+Patch10:        js-1.8.5-c++11.patch
+Patch11:	aarch64.patch
 
 BuildRequires:	multiarch-utils >= 1.0.3
 BuildRequires:	nspr-devel
@@ -79,6 +83,14 @@ Static library for %{libname}
 %patch2 -p3 -b .bigendian
 %patch3 -p3 -b .libed
 %patch4 -p2 -b .jsf
+%patch9 -p3 -b .array-recursion
+%patch10 -p3 -b .c++11
+%patch11 -p3 -b .arm64
+
+# Rm parts with spurios licenses, binaries
+# Some parts under BSD (but different suppliers): src/assembler
+#rm -rf src/assembler src/yarr/yarr src/yarr/pcre src/yarr/wtf src/v8-dtoa
+rm -rf ctypes/libffi t tests/src/jstests.jar tracevis v8
 
 autoconf-2.13
 rm -rf ctypes/libffi/
@@ -93,7 +105,6 @@ export CXX=g++
 	--enable-readline \
 	--enable-jemalloc \
 	--enable-threadsafe \
-	--enable-ctypes \
 	--with-system-nspr
 %make
 
