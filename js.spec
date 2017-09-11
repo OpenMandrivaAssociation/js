@@ -95,7 +95,7 @@ rm -rf ctypes/libffi t tests/src/jstests.jar tracevis v8
 autoconf-2.13
 rm -rf ctypes/libffi/
 tar -xf %{SOURCE1} -C ctypes
-mv ctypes/libffi-3.0.13 ctypes/libffi/
+mv ctypes/libffi-3.2.1 ctypes/libffi/
 
 %build
 #export CC=gcc
