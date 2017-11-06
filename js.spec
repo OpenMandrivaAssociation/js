@@ -10,7 +10,7 @@ Summary:	SpiderMonkey, the Mozilla JavaScript engine
 Name:		js
 Epoch:		1
 Version:	1.85
-Release:	21
+Release:	22
 License:	MPL
 Group:		Development/Other
 Url:		http://www.mozilla.org/js/
@@ -30,7 +30,6 @@ Patch9:         js-1.8.5-array-recursion.patch
 Patch10:        js-1.8.5-c++11.patch
 Patch11:	aarch64.patch
 
-BuildRequires:	multiarch-utils >= 1.0.3
 BuildRequires:	nspr-devel
 BuildRequires:	jemalloc-devel
 BuildRequires:	pkgconfig(libedit)
@@ -117,8 +116,6 @@ chmod 644 %{buildroot}%{_includedir}/js/*
 install -m755 shell/js -D %{buildroot}%{_bindir}/js
 install -m755 jscpucfg -D %{buildroot}%{_bindir}/jscpucfg
 
-%multiarch_includes %{buildroot}%{_includedir}/js/jsautocfg.h
-
 %files
 %{_bindir}/*
 
@@ -128,7 +125,6 @@ install -m755 jscpucfg -D %{buildroot}%{_bindir}/jscpucfg
 %files -n %{devname}
 %doc README.html
 %dir %{_includedir}/js
-%{multiarch_includedir}/js/jsautocfg.h
 %{_includedir}/js/*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
