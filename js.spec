@@ -35,7 +35,7 @@ BuildRequires:	jemalloc-devel
 BuildRequires:	pkgconfig(libedit)
 BuildRequires:	readline-devel
 BuildRequires:	autoconf2.1
-BuildRequires:	python
+BuildRequires:	python2
 # wtf?
 BuildRequires:	zip
 
