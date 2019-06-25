@@ -9,7 +9,7 @@
 Summary:	SpiderMonkey, the Mozilla JavaScript engine
 Name:		js
 Epoch:		1
-Version:	1.85
+Version:	60.1.0
 Release:	24
 License:	MPL
 Group:		Development/Other
