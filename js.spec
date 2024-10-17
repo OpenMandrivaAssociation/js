@@ -13,7 +13,7 @@ Version:	78.15.0
 Release:	2
 License:	MPL
 Group:		Development/Other
-Url:		http://www.mozilla.org/js/
+Url:		https://www.mozilla.org/js/
 Source0:	http://ftp.mozilla.org/pub/mozilla.org/js/%{name}185-1.0.0.tar.gz
 # by default JS ships with libffi 3.0.10
 # it's very old version
