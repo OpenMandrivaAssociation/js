@@ -30,6 +30,10 @@ Patch9:         js-1.8.5-array-recursion.patch
 Patch10:        js-1.8.5-c++11.patch
 Patch11:	aarch64.patch
 
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	nspr-devel
 BuildRequires:	jemalloc-devel
 BuildRequires:	pkgconfig(libedit)
